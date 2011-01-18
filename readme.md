@@ -35,7 +35,7 @@ in src/test/resources/deploy.fs
 
     push -n ${project.artifactId} -p target/${project.artifactId}-${project.version}.${project.packaging}
 
-and then configure your pom.xml to do filtering on that directory.
+then configure the plugin to use that script, and then configure your pom.xml to do filtering on that directory.
 
      <build>
      ...
