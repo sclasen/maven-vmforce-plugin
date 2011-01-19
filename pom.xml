@@ -9,8 +9,58 @@
     <properties>
         <!--tests resource filtering on a script-->
         <plugin>plugin</plugin>
+        <force.repo.url>http://repo.t.salesforce.com/archiva/repository/releases</force.repo.url>
+        <force.repo.snapshot.url>http://repo.t.salesforce.com/archiva/repository/snapshots</force.repo.snapshot.url>
     </properties>
-
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    <repositories>
+        <repository>
+            <id>force.repo</id>
+            <name>Force.com Repository</name>
+            <url>${force.repo.snapshot.url}</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>force.repo.snapshot</id>
+            <name>Force.com Snapshot Repository</name>
+            <url>${force.repo.snapshot.url}</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>force.repo</id>
+            <name>Force.com Repository</name>
+            <url>${force.repo.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>force.repo.snapshot</id>
+            <name>Force.com Snapshot Repository</name>
+            <url>${force.repo.snapshot.url}</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:git:git://github.com/sclasen/maven-vmforce-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:sclasen/maven-vmforce-plugin.git</developerConnection>
+        <url>http://github.com/sclasen/maven-vmforce-plugin</url>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
