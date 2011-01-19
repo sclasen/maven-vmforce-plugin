@@ -2,26 +2,57 @@
 
 This is a maven plugin that lets you execute cliforce scripts as part of your maven build.
 
-It can be used to set up before and tear down after functional tests run by maven, or for any other purpose for which you
-can use a force script.
+It can be used to set up before and tear down after integration tests run by maven, or for any other purpose for which
+you can use a force script.
 
 ##configuration
 
-Here is an example configuration that could be added to your pom.xml to cause a force script to be executed
-before tests are run.
+Here is an example configuration that could be added to your pom.xml to cause force scripts to be run before and
+after integration tests.
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <!--failsafe is the maven integration testing plugin-->
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>com.force.maven.plugin</groupId>
                 <artifactId>maven-vmforce-plugin</artifactId>
-                <configuration>
-                    <forceScript>target/test-classes/cleanAndSetupTestEnv.fs</forceScript>
-                </configuration>
                 <executions>
                     <execution>
-                        <phase>process-test-classes</phase>
+                        <id>pre</id>
+                        <phase>pre-integration-test</phase>
                         <goals>
                             <goal>force</goal>
                         </goals>
+                        <configuration>
+                            <forceScript>target/test-classes/setupIntegrationTest.fs</forceScript>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>pre</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>force</goal>
+                        </goals>
+                        <configuration>
+                            <forceScript>target/test-classes/cleanupIntegrationTest.fs</forceScript>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
